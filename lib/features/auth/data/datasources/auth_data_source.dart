@@ -7,4 +7,9 @@ abstract class AuthDataSource {
     Future<String?> currentUserId();
 
     Future<void> signOut();
+
+    Future<String> signUp({
+        required String email,
+        required String password,
+    });
 }

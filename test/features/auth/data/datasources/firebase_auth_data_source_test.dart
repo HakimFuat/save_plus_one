@@ -76,4 +76,38 @@ void main() {
         //Then
         verify(firebaseAuth.signOut()).called(1);
     });
+
+    test('should create Firebase account and return user id', () async {
+        //Given
+        final firebaseAuth = MockFirebaseAuth();
+        final userCredential = MockUserCredential();
+        final user = MockUser();
+
+        when(
+            firebaseAuth.createUserWithEmailAndPassword(
+                email: 'hakim@example.com',
+                password: 'password123',
+            ),
+        ).thenAnswer((_) async => userCredential);
+
+        when(userCredential.user).thenReturn(user);
+        when(user.uid).thenReturn('user-123');
+
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        //When
+        final userId = await dataSource.signUp(
+            email: 'hakim@example.com',
+            password: 'password123',
+        );
+
+        //Then
+        expect(userId, 'user-123');
+        verify(
+            firebaseAuth.createUserWithEmailAndPassword(
+                email: 'hakim@example.com',
+                password: 'password123',
+            ),
+        ).called(1);
+    });
 }

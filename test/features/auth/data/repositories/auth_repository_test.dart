@@ -33,4 +33,29 @@ void main() {
 
     expect(dataSource.signOutCalled, isTrue);
   });
+
+  test('should sign up through data source', () async {
+    //Given
+    final dataSource = FakeAuthDataSource();
+    final repository = FirebaseAuthRepository(dataSource);
+
+    //When
+    final userId = await repository.signUp(email: 'hakim@example.com', password: 'password123',);
+
+    //Then
+    expect(userId, 'user-123');
+  });
+
+  test('should sign up through data source', () async {
+    //Given
+    final dataSource = FakeAuthDataSource();
+    final repository = FirebaseAuthRepository(dataSource);
+
+    //When
+    final userId = await repository.signUp(email: 'hakim@example.com', password: 'password123',);
+
+    //Then
+    expect(userId, 'user-123');
+    expect(dataSource.signUpCalled, isTrue);
+  });
 }

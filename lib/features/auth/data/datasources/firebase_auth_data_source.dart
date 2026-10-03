@@ -28,4 +28,17 @@ class FirebaseAuthDataSource implements AuthDataSource {
     Future<void> signOut() {
         return firebaseAuth.signOut();
     }
+
+    @override
+    Future<String> signUp({
+        required String email,
+        required String password,
+    }) async {
+        final credential = await firebaseAuth.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+        );
+
+        return credential.user!.uid;
+    }
 }

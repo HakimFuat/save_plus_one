@@ -2,6 +2,7 @@ import 'package:save_plus_one/features/auth/data/datasources/auth_data_source.da
 
 class FakeAuthDataSource implements AuthDataSource {
   bool signOutCalled = false;
+  bool signUpCalled = false;
 
   @override
   Future<String> signIn({
@@ -19,5 +20,14 @@ class FakeAuthDataSource implements AuthDataSource {
   @override
   Future<void> signOut() async {
     signOutCalled = true;
+  }
+
+  @override
+  Future<String> signUp({
+    required String email,
+    required String password,
+  }) async {
+    signUpCalled = true;
+    return 'user-123';
   }
 }
