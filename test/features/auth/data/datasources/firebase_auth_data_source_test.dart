@@ -32,4 +32,36 @@ void main() {
         //Then
         expect(userId, 'user-123');
     });
+
+    test('should return current user id when user is authenticated', () async {
+        //Given
+        final firebaseAuth = MockFirebaseAuth();
+        final user = MockUser();
+
+        when(firebaseAuth.currentUser).thenReturn(user);
+        when(user.uid).thenReturn('user-123');
+
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        //When
+        final userId = await dataSource.currentUserId();
+
+        //Then
+        expect(userId, 'user-123');
+    });
+    
+    test('should return null when no user is authenticated', () async {
+        //Given
+        final firebaseAuth = MockFirebaseAuth();
+
+        when(firebaseAuth.currentUser).thenReturn(null);
+
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        //When
+        final userId = await dataSource.currentUserId();
+
+        //Then
+        expect(userId, isNull);
+    });
 }

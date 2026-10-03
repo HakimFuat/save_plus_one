@@ -18,4 +18,9 @@ class FirebaseAuthDataSource implements AuthDataSource {
 
         return credential.user!.uid;
     }
+
+    @override
+    Future<String?> currentUserId() async {
+        return firebaseAuth.currentUser?.uid;
+    }
 }

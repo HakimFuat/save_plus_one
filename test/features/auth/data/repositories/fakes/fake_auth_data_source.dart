@@ -8,4 +8,9 @@ class FakeAuthDataSource implements AuthDataSource {
   }) async {
     return 'user-123';
   }
+
+  @override
+  Future<String?> currentUserId() async {
+    return 'user-123';
+  }
 }

@@ -13,4 +13,9 @@ class FakeAuthRepository implements AuthRepository {
 
     return 'user-123';
   }
+
+  @override
+  Future<String?> currentUserId() async {
+    return null;
+  }
 }

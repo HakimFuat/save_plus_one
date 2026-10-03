@@ -15,4 +15,13 @@ void main() {
     //Then
     expect(userId, 'user-123');
   });
+
+  test('should return current user id from data source', () async {
+    final dataSource = FakeAuthDataSource();
+    final repository = FirebaseAuthRepository(dataSource);
+
+    final userId = await repository.currentUserId();
+
+    expect(userId, 'user-123');
+  });
 }

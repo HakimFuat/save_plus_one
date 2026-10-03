@@ -16,4 +16,9 @@ class FirebaseAuthRepository implements AuthRepository {
             password: password,
         );
     }
+
+    @override
+    Future<String?> currentUserId() {
+        return dataSource.currentUserId();
+    }
 }

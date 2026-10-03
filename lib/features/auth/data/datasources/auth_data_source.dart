@@ -3,4 +3,6 @@ abstract class AuthDataSource {
         required String email,
         required String password,
     });
+
+    Future<String?> currentUserId();
 }
