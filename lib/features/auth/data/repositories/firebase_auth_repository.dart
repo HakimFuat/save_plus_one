@@ -21,4 +21,9 @@ class FirebaseAuthRepository implements AuthRepository {
     Future<String?> currentUserId() {
         return dataSource.currentUserId();
     }
+
+    @override
+    Future<void> signOut() async {
+        return dataSource.signOut();
+    }
 }

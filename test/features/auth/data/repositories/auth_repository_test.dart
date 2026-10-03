@@ -24,4 +24,13 @@ void main() {
 
     expect(userId, 'user-123');
   });
+
+  test('should sign out through data source', () async {
+    final dataSource = FakeAuthDataSource();
+    final repository = FirebaseAuthRepository(dataSource);
+
+    await repository.signOut();
+
+    expect(dataSource.signOutCalled, isTrue);
+  });
 }

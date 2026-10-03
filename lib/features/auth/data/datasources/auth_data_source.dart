@@ -5,4 +5,6 @@ abstract class AuthDataSource {
     });
 
     Future<String?> currentUserId();
+
+    Future<void> signOut();
 }

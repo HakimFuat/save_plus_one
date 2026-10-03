@@ -5,4 +5,5 @@ abstract class AuthRepository {
   });
 
   Future<String?> currentUserId();
+  Future<void> signOut();
 }

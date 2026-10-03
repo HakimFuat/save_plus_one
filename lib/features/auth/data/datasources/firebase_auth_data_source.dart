@@ -23,4 +23,9 @@ class FirebaseAuthDataSource implements AuthDataSource {
     Future<String?> currentUserId() async {
         return firebaseAuth.currentUser?.uid;
     }
+
+    @override
+    Future<void> signOut() {
+        return firebaseAuth.signOut();
+    }
 }

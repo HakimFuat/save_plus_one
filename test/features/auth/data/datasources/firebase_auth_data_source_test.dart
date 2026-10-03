@@ -64,4 +64,16 @@ void main() {
         //Then
         expect(userId, isNull);
     });
+
+    test('should sign out from Firebase Auth', () async {
+        //Given
+        final firebaseAuth = MockFirebaseAuth();
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        //When
+        await dataSource.signOut();
+
+        //Then
+        verify(firebaseAuth.signOut()).called(1);
+    });
 }
