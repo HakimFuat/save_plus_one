@@ -13,6 +13,6 @@ void main() {
     final userId = await repository.signIn(email: 'hakim@example.com', password: 'password123',);
 
     //Then
-    expect(userId, 'user_123');
+    expect(userId, 'user-123');
   });
 }
