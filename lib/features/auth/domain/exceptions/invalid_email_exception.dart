@@ -1,3 +1,3 @@
 class InvalidEmailException implements Exception {
-    const InvalidEmailException();
+  const InvalidEmailException();
 }
