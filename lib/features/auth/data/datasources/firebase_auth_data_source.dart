@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:save_plus_one/features/auth/data/datasources/auth_data_source.dart';
+import 'package:save_plus_one/features/auth/domain/exceptions/authentication_exception.dart';
+
 
 class FirebaseAuthDataSource implements AuthDataSource {
     final FirebaseAuth firebaseAuth;
@@ -11,12 +13,16 @@ class FirebaseAuthDataSource implements AuthDataSource {
         required String email,
         required String password,
     }) async {
-        final credential = await firebaseAuth.signInWithEmailAndPassword(
-            email: email,
-            password: password,
-        );
+        try {
+            final credential = await firebaseAuth.signInWithEmailAndPassword(
+                email: email,
+                password: password,
+            );
 
-        return credential.user!.uid;
+            return credential.user!.uid;
+        } on FirebaseAuthException {
+            throw AuthenticationException();
+        }
     }
 
     @override
@@ -34,11 +40,15 @@ class FirebaseAuthDataSource implements AuthDataSource {
         required String email,
         required String password,
     }) async {
-        final credential = await firebaseAuth.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-        );
+        try {
+            final credential = await firebaseAuth.createUserWithEmailAndPassword(
+                email: email,
+                password: password,
+            );
 
-        return credential.user!.uid;
+            return credential.user!.uid;
+        } on FirebaseAuthException {
+            throw AuthenticationException();
+        }
     }
 }

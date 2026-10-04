@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:save_plus_one/features/auth/domain/exceptions/authentication_exception.dart';
 import 'package:save_plus_one/features/auth/data/datasources/firebase_auth_data_source.dart';
 import 'package:mockito/mockito.dart';
 
@@ -109,5 +111,57 @@ void main() {
                 password: 'password123',
             ),
         ).called(1);
+    });
+
+    test('should throw AuthenticationException when sign up fails', () async {
+        //Given
+        final firebaseAuth = MockFirebaseAuth();
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        when(
+            firebaseAuth.createUserWithEmailAndPassword(
+                email: 'existing@example.com',
+                password: 'password123',
+            ),
+        ).thenThrow(
+            FirebaseAuthException(
+                code: 'email-already-in-use',
+            ),
+        );
+
+        //When & Then
+        await expectLater(
+            dataSource.signUp(
+                email: 'existing@example.com',
+                password: 'password123',
+            ),
+            throwsA(isA<AuthenticationException>()),
+        );
+    });
+
+    test('should throw AuthenticationException when sign in fails', () async {
+        //Given 
+        final firebaseAuth = MockFirebaseAuth();
+        final dataSource = FirebaseAuthDataSource(firebaseAuth);
+
+        when(
+            firebaseAuth.signInWithEmailAndPassword(
+                email: 'wrong@example.com',
+                password: 'wrongpassword',
+            ),
+        ).thenThrow(
+            FirebaseAuthException(
+                code: 'invalid-credential',
+            ),
+        );
+
+        //When & Then
+        await expectLater(
+            dataSource.signIn(
+                email: 'wrong@example.com',
+                password: 'wrongpassword',
+            ),
+            throwsA(isA<AuthenticationException>()),
+        );
     });
 }
